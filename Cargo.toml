@@ -1,0 +1,28 @@
+[package]
+name = "segment-anything-rs"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[profile.dev]
+rpath = true
+
+[profile.release]
+rpath = true
+
+
+[dependencies]
+#ort = { version = "1.14.1", default-features = false, features = [ "load-dynamic"] }
+ort = {  git = "https://github.com/pykeio/ort", rev = "f678d3a890a0e1fecf917fb8efd9355438263d0f", default-features = false, features = [ "cuda"] }
+
+ndarray = { version = "0.15.6" }
+
+[dev_dependencies]
+opencv = { version = "0.84", default-features = false, features = ["imgproc", "imgcodecs"]}
+cv-convert = { version = "0.24", default-features = false, features = ["ndarray_0-15", "opencv_0-84"]}
+
+
+[target.x86_64-unknown-linux-gnu]
+rustflags = [ "-Clink-args=-Wl,-rpath,\\$ORIGIN" ]
+
